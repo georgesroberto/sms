@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.pkl
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+
+# Django & SQLite
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Migrations (keep __init__.py)
+*/migrations/*.py
+!*/migrations/__init__.py
+*/migrations/*.pyc
+
+# Logs
+*.log
+*.pot
+*.mo
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.env
+.env.local
+
+# PythonAnywhere
+*.bash_history
+.pythonstartup
+.python_history
+.pythonanywhere.com
+
+# Coverage / Testing
+.coverage
+htmlcov/
+.tox/
+.cache/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
