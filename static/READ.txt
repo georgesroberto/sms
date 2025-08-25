@@ -1,5 +1,0 @@
-This is where all static files live
-
-img
-css
-js
