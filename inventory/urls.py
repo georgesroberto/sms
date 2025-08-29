@@ -4,7 +4,12 @@ from . import views
 app_name = 'inventory'
 
 urlpatterns = [
-    path('sales/', views.sales_report, name='sales'),
+    # Admin Urls
+    path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('sales_report/', views.sales_report, name='sales_report'),
     path('stock/', views.stock_list, name='stock'),
-    path('record_sale/', views.record_sale, name='record_sales')
+    
+    # Vendor urls
+    path('dashboard/', views.vendor_dashboard, name='vendor_dashboard'),
+    path('sales/', views.vendor_sales, name='vendor_sales')
 ]

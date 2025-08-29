@@ -16,7 +16,7 @@
           </div>
           <div>
             <h6 class="text-muted small">Total Stocks</h6>
-            <h4 class="fw-bold mb-0">120</h4>
+            <h4 class="fw-bold mb-0">{{ total_stock }}</h4>
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
           </div>
           <div>
             <h6 class="text-muted small">Sales Today</h6>
-            <h4 class="fw-bold mb-0">45</h4>
+            <h4 class="fw-bold mb-0">{{ sales_today }}</h4>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
           </div>
           <div>
             <h6 class="text-muted small">Low Stock Alerts</h6>
-            <h4 class="fw-bold mb-0">8</h4>
+            <h4 class="fw-bold mb-0">{{ low_stock_count }}</h4>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@
           </div>
           <div>
             <h6 class="text-muted small">Shopkeepers</h6>
-            <h4 class="fw-bold mb-0">12</h4>
+            <h4 class="fw-bold mb-0">{{ shopkeepers_count }}</h4>
           </div>
         </div>
       </div>
@@ -102,17 +102,15 @@
   new Chart(document.getElementById("salesChart"), {
     type: "line",
     data: {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-      datasets: [
-        {
-          label: "Sales",
-          data: [120, 150, 100, 180, 200, 170],
-          borderColor: "#0d6efd",
-          backgroundColor: "rgba(13, 110, 253, 0.1)",
-          fill: true,
-          tension: 0.4,
-        },
-      ],
+      labels: {{ sales_trend_labels|safe }},
+      datasets: [{
+        label: "Sales",
+        data: {{ sales_trend_values|safe }},
+        borderColor: "#0d6efd",
+        backgroundColor: "rgba(13, 110, 253, 0.1)",
+        fill: true,
+        tension: 0.4,
+      }]
     },
     options: { responsive: true, plugins: { legend: { display: false } } },
   });
@@ -121,14 +119,12 @@
   new Chart(document.getElementById("stockPieChart"), {
     type: "pie",
     data: {
-      labels: ["Electronics", "Furniture", "Clothing"],
-      datasets: [
-        {
-          data: [50, 30, 40],
-          backgroundColor: ["#0d6efd", "#ffc107", "#198754"],
-        },
-      ],
-    },
+      labels: {{ stock_labels|safe }},
+      datasets: [{
+        data: {{ stock_values|safe }},
+        backgroundColor: ["#0d6efd", "#ffc107", "#198754", "#dc3545", "#6610f2"],
+      }]
+    }
   });
 </script>
 

@@ -29,6 +29,13 @@
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      .highlight-row {
+        background-color: #d4edda !important;
+        transition: background-color 2s ease;
+      }
+    </style>
   </head>
 
   <body>
@@ -115,9 +122,11 @@
       class="sidebar bg-light border-end vh-100 position-fixed pt-5"
     >
       <ul class="nav flex-column px-2">
+        {% if request.user.is_admin %}
+        <!-- Admin menu -->
         <li class="nav-item">
           <a
-            href="{% url 'users:dashboard' %}"
+            href="{% url 'inventory:admin_dashboard' %}"
             class="nav-link d-flex align-items-center"
           >
             <i class="fas fa-tachometer-alt me-2"></i> Dashboard
@@ -133,7 +142,7 @@
         </li>
         <li class="nav-item">
           <a
-            href="{% url 'inventory:sales' %}"
+            href="{% url 'inventory:sales_report' %}"
             class="nav-link d-flex align-items-center"
           >
             <i class="fas fa-cash-register me-2"></i> Sales Logs
@@ -144,14 +153,64 @@
             <i class="fas fa-chart-line me-2"></i> Reports
           </a>
         </li>
+        {% endif %} {% if request.user.is_vendor %}
+        <!-- Vendor menu -->
+        <li class="nav-item">
+          <a
+            href="{% url 'inventory:vendor_dashboard' %}"
+            class="nav-link d-flex align-items-center"
+          >
+            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="{% url 'inventory:vendor_sales' %}"
+            class="nav-link d-flex align-items-center"
+          >
+            <i class="fas fa-store me-2"></i> My Sales
+          </a>
+        </li>
+        {% endif %}
       </ul>
     </aside>
     <!-- End Sidebar -->
 
     <!-- ======= Main ======= -->
     <main id="main" class="main pt-5" style="margin-left: 250px">
-      <div class="container-fluid py-4">{% block content %} {% endblock %}</div>
+      <div class="container-fluid py-4">
+        <!-- Toasts -->
+        <div
+          class="toast-container position-fixed top-0 end-0 p-3"
+          style="z-index: 1100"
+        >
+          {% if messages %} {% for message in messages %}
+          <div
+            class="toast align-items-center 
+                          text-bg-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} 
+                          border-0 mb-2"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            data-bs-delay="4000"
+          >
+            <div class="d-flex">
+              <div class="toast-body p-2">{{ message }}</div>
+              <button
+                type="button"
+                class="btn-close btn-close-white me-2 m-auto"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          {% endfor %} {% endif %}
+        </div>
+
+        {% block content %}{% endblock %}
+      </div>
     </main>
+    <!-- ======= End Main ======= -->
 
     <!-- ======= Footer ======= -->
     <footer class="footer bg-white border-top py-3 text-center fixed-bottom">
@@ -160,6 +219,7 @@
         Reserved.</small
       >
     </footer>
+    <!-- ======= End Footer ======= -->
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -167,6 +227,16 @@
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
       AOS.init();
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const toastElList = [].slice.call(document.querySelectorAll(".toast"));
+        toastElList.map(function (toastEl) {
+          const toast = new bootstrap.Toast(toastEl);
+          toast.show();
+        });
+      });
     </script>
   </body>
 </html>
