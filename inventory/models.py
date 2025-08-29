@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+import math
 
 
 class Category(models.Model):
@@ -51,9 +52,29 @@ class StockEntry(models.Model):
         return f"{self.quantity} {self.product.name} added on {self.date_added.date()}"
 
     def save(self, *args, **kwargs):
-        if self.pk is None:  
-            self.product.quantity += self.quantity
-            self.product.buying_price = self.buying_price
+        if self.pk is None:
+            # old values
+            old_qty = self.product.quantity
+            old_cost = self.product.buying_price
+            old_total = old_qty * old_cost
+
+            # new values
+            new_qty = self.quantity
+            new_cost = self.buying_price
+            new_total = new_qty * new_cost
+
+            # update product qty
+            total_qty = old_qty + new_qty
+            if total_qty > 0:
+                avg_cost = (old_total + new_total) / total_qty
+            else:
+                avg_cost = new_cost  # fallback
+
+            # round up to nearest tens
+            avg_cost = math.ceil(avg_cost / 10) * 10
+
+            self.product.quantity = total_qty
+            self.product.buying_price = avg_cost
             self.product.save()
         super().save(*args, **kwargs)
 

@@ -124,12 +124,18 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link d-flex align-items-center">
+          <a
+            href="{% url 'inventory:stock' %}"
+            class="nav-link d-flex align-items-center"
+          >
             <i class="fas fa-box me-2"></i> Stocks
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link d-flex align-items-center">
+          <a
+            href="{% url 'inventory:sales' %}"
+            class="nav-link d-flex align-items-center"
+          >
             <i class="fas fa-cash-register me-2"></i> Sales Logs
           </a>
         </li>
@@ -148,7 +154,7 @@
     </main>
 
     <!-- ======= Footer ======= -->
-    <footer class="footer bg-white border-top py-3 text-center">
+    <footer class="footer bg-white border-top py-3 text-center fixed-bottom">
       <small
         >&copy; <span id="year"></span> Stock Management System. All Rights
         Reserved.</small
