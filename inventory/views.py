@@ -1,6 +1,5 @@
 from django.db.models import F, ExpressionWrapper, DecimalField
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from .models import Product, Sale, StockEntry
 from .forms import ProductForm, StockEntryForm
 
@@ -44,3 +43,7 @@ def sales_report(request):
     ).order_by("-date_sold")
     
     return render(request, "admin/sales_report.html", {"sales": sales})
+
+
+def record_sale(request):
+    return render(request, 'vendor/index.html')
