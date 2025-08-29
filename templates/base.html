@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ThreadLedger | Stock Management System</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- Custom Styles -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+
+    <!-- Bootstrap Notify -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable-bootstrap-notify/3.1.3/bootstrap-notify.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+    <header
+      id="header"
+      class="header fixed-top d-flex align-items-center shadow-sm bg-white"
+    >
+      <div class="d-flex align-items-center justify-content-between w-100 px-3">
+        <!-- Logo -->
+        <a
+          href="{% url 'users:dashboard' %}"
+          class="logo d-flex align-items-center text-decoration-none"
+        >
+          <img src="{% static 'img/logo.png' %}" alt="Logo" height="40" />
+          <span class="fw-bold ms-2 text-primary">ThreadLedger</span>
+        </a>
+
+        <!-- Search bar -->
+        <form class="d-none d-md-block">
+          <input
+            class="form-control rounded-pill mx-4"
+            type="text"
+            placeholder="Search..."
+          />
+        </form>
+
+        <!-- Icons -->
+        <nav class="header-nav ms-auto d-flex align-items-center">
+          <!-- Notifications -->
+          <div class="nav-item dropdown me-3">
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+              <i class="fas fa-bell fs-5"></i>
+              <span class="badge bg-danger badge-number">3</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li class="dropdown-header">You have 3 new notifications</li>
+              <li><hr class="dropdown-divider" /></li>
+              <li class="notification-item px-3 py-2">
+                Stock for Item X is low
+              </li>
+              <li class="notification-item px-3 py-2">
+                New sale logged by Shopkeeper
+              </li>
+              <li class="notification-item px-3 py-2">
+                Monthly report generated
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li class="dropdown-footer text-center">
+                <a href="#">Show all notifications</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Profile -->
+          <div class="nav-item dropdown">
+            <a
+              href="#"
+              class="nav-link nav-profile d-flex align-items-center"
+              data-bs-toggle="dropdown"
+            >
+              <i class="fas fa-user-circle fs-3 text-primary"></i>
+              <span class="d-none d-md-block ms-2">{{ user.username }}</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item" href="{% url 'users:logout' %}"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside
+      id="sidebar"
+      class="sidebar bg-light border-end vh-100 position-fixed pt-5"
+    >
+      <ul class="nav flex-column px-2">
+        <li class="nav-item">
+          <a
+            href="{% url 'users:dashboard' %}"
+            class="nav-link d-flex align-items-center"
+          >
+            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="{% url 'inventory:stock' %}"
+            class="nav-link d-flex align-items-center"
+          >
+            <i class="fas fa-box me-2"></i> Stocks
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="{% url 'inventory:sales' %}"
+            class="nav-link d-flex align-items-center"
+          >
+            <i class="fas fa-cash-register me-2"></i> Sales Logs
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link d-flex align-items-center">
+            <i class="fas fa-chart-line me-2"></i> Reports
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <!-- End Sidebar -->
+
+    <!-- ======= Main ======= -->
+    <main id="main" class="main pt-5" style="margin-left: 250px">
+      <div class="container-fluid py-4">{% block content %} {% endblock %}</div>
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer class="footer bg-white border-top py-3 text-center fixed-bottom">
+      <small
+        >&copy; <span id="year"></span> Stock Management System. All Rights
+        Reserved.</small
+      >
+    </footer>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+      AOS.init();
+    </script>
+  </body>
+</html>

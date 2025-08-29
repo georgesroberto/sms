@@ -1,23 +1,26 @@
 # 👗 ThreadLedger — Simple Stock & Sales Management System
 
 ThreadLedger is a lightweight **Stock Management System (SMS)** built with **Django**.  
-It’s designed for small vendors and admins to easily manage stock, record sales, and generate quick reports — all in a clean and simple interface.  
+It’s designed for small vendors and admins to easily manage stock, record sales, and generate quick reports — all in a clean and simple interface.
 
 ---
 
 ## 🚀 Features
 
 ### 👩‍💼 Admin
+
 - Add and manage stock (`product name`, `buying price`, `quantity`, `reorder level`)
 - Monitor stock levels and reorder alerts
 - View sales summaries by date and payment method
 
 ### 🧑‍💻 Vendor
+
 - View available stock
 - Log sales (`product`, `qty`, `selling price`, `payment status`)
 - Track personal daily sales history
 
 ### 📊 System
+
 - Auto-reduces stock on each sale
 - Payment statuses: `Paid & Taken`, `Partial`, `Unpaid & Taken`, `Paid & Untaken`
 - Simple daily sales reports
@@ -37,16 +40,21 @@ It’s designed for small vendors and admins to easily manage stock, record sale
 ## ⚙️ Installation & Setup
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/georgesroberto/sms.git
 cd sms
-````
+```
 
 ### 2. Create and activate virtual environment
 
 ```bash
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
+```
+
+```bash
+python -m venv venv
 venv\Scripts\activate      # Windows
 ```
 
@@ -61,7 +69,7 @@ pip install -r requirements.txt
 Create a `.env` file in the project root:
 
 ```env
-DJANGO_SETTINGS_MODULE=src.settings.dev
+DJANGO_SETTINGS_MODULE=sms.settings.dev
 SECRET_KEY=your-secret-key
 ```
 
@@ -91,24 +99,24 @@ Visit [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 **Product**
 
-* name
-* buying\_price
-* quantity
-* reorder\_level
+- name
+- buying_price
+- quantity
+- reorder_level
 
 **Sale**
 
-* product (FK)
-* vendor (FK to User)
-* quantity
-* selling\_price
-* payment\_status
-* date
+- product (FK)
+- vendor (FK to User)
+- quantity
+- selling_price
+- payment_status
+- date
 
 **User**
 
-* username, password
-* role: `ADMIN` / `VENDOR`
+- username, password
+- role: `ADMIN` / `VENDOR`
 
 ---
 
@@ -126,16 +134,17 @@ Visit [http://127.0.0.1:8000](http://127.0.0.1:8000)
    ```bash
    python manage.py collectstatic
    ```
+
 9. Reload the web app from PythonAnywhere dashboard.
 
 ---
 
 ## 👥 Team
 
-* **Georges** — Backend setup, Auth & Deployment
-* **Grace** — Admin UI
-* **Solomon** — Vendor UI
-* **James** — Reports & Polishing
+- **Georges** — Backend setup, Auth & Deployment
+- **Grace** — Admin UI
+- **Solomon** — Vendor UI
+- **James** — Reports & Polishing
 
 ---
 
@@ -149,4 +158,3 @@ This project is licensed under the MIT License — feel free to use, modify, and
 
 > “ThreadLedger keeps your threads in check 👗📊.
 > Less paperwork, more fashion.”
-
