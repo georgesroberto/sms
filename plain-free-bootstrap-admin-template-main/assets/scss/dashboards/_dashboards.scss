@@ -75,61 +75,6 @@
   }
 }
 
-.todo-list-wrapper {
-  ul {
-    li.todo-list-item {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-left: 20px;
-      margin-bottom: 25px;
-
-      &:last-child {
-        margin-bottom: 0px;
-      }
-
-      &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 4px;
-        height: 100%;
-      }
-
-      @media #{$xs} {
-        display: block;
-
-        .todo-status {
-          margin-top: 20px;
-        }
-      }
-
-      &.success {
-        &::before {
-          background: $success;
-        }
-      }
-      &.primary {
-        &::before {
-          background: $primary;
-        }
-      }
-      &.orange {
-        &::before {
-          background: $orange;
-        }
-      }
-      &.danger {
-        &::before {
-          background: $danger;
-        }
-      }
-    }
-  }
-}
-
 .cards-title {
   font-size: 18px;
   line-height: 22px;
