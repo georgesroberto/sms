@@ -1,0 +1,120 @@
+/* ================================
+   Global Styles
+================================= */
+body {
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  background-color: #f5f7fb;
+  color: #444;
+}
+
+a {
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+  color: #0d6efd;
+}
+
+.main {
+  margin-left: 250px; /* space for sidebar */
+  padding: 80px 20px 40px;
+  transition: margin-left 0.3s;
+}
+
+@media (max-width: 991px) {
+  .main {
+    margin-left: 0;
+  }
+}
+
+/* ================================
+     Navbar
+  ================================= */
+.navbar {
+  height: 60px;
+  padding: 0 1rem;
+}
+
+.navbar-brand img {
+  max-height: 40px;
+}
+
+.navbar .form-control {
+  font-size: 0.9rem;
+  border-radius: 20px;
+}
+
+/* ================================
+     Sidebar
+  ================================= */
+aside {
+  width: 250px;
+  top: 60px; /* below navbar */
+  left: 0;
+  background: #fff;
+  border-right: 1px solid #e0e0e0;
+  transition: all 0.3s;
+  z-index: 100;
+}
+
+aside .nav-link {
+  padding: 12px 15px;
+  font-weight: 500;
+  color: #444;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+aside .nav-link.active,
+aside .nav-link:hover {
+  background-color: #0d6efd;
+  color: #fff !important;
+}
+
+aside .nav-link i {
+  font-size: 1.1rem;
+}
+
+/* ================================
+     Cards (Dashboard)
+  ================================= */
+.info-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+  font-size: 1.2rem;
+}
+
+/* ================================
+     Footer
+  ================================= */
+.footer {
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+  padding: 15px 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* ================================
+     Animation (AOS override tweaks)
+  ================================= */
+[data-aos] {
+  transition-duration: 0.8s !important;
+}
+
+/* ================================
+     Notifications (Bootstrap Notify)
+  ================================= */
+.alert {
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+}
