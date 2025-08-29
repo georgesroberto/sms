@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import User, Role
+from .models import User
 
 
 # Register View
@@ -67,9 +67,9 @@ def logout_view(request):
 def dashboard(request):
     user = request.user
     if user.is_role('admin'):
-        return render(request, 'users/admin_dashboard.html')
+        return redirect('inventory:admin_dashboard')
     elif user.is_role('vendor'):
-        return render(request, 'users/vendor_dashboard.html')
+        return redirect('inventory:vendor_dashboard')
     else:
         messages.error(request, "Invalid role. Please contact the administrator.")
         return redirect('users:logout')

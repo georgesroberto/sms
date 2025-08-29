@@ -1,0 +1,160 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <h2 class="mb-4">My Sales</h2>
+
+  <!-- Record Sale -->
+  <div class="card mb-4">
+    <div class="card-header">Record a Sale</div>
+    <div class="card-body">
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Show non-field errors (e.g., validations in Sale.clean) -->
+        {% if sale_form.non_field_errors %}
+        <div class="alert alert-danger">
+          {% for error in sale_form.non_field_errors %}
+          <div>{{ error }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="mb-3">
+          <label for="id_product" class="form-label">Product</label>
+          {{ sale_form.product }} {% if sale_form.product.errors %}
+          <div class="text-danger small">
+            {% for error in sale_form.product.errors %} {{ error }} {%endfor%}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="id_quantity" class="form-label">Quantity</label>
+          {{ sale_form.quantity }} {% if sale_form.quantity.errors %}
+          <div class="text-danger small">
+            {% for error in sale_form.quantity.errors %} {{ error }} {%endfor%}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <label for="id_selling_price" class="form-label">Selling Price</label>
+          {{ sale_form.selling_price }} {% if sale_form.selling_price.errors %}
+          <div class="text-danger small">
+            {% for error in sale_form.selling_price.errors %} {{ error }}
+            {%endfor%}
+          </div>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-success">
+          <i class="fas fa-save me-2"></i> Save Sale
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Inventory Table -->
+  <div class="card mb-4">
+    <div class="card-header">Available Products</div>
+    <div class="card-body table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Stock</th>
+            <th>Cost</th>
+            <th>Sell Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr
+            class="{% if product.quantity == 0 %} table-danger {% elif product.quantity <= product.reorder_level %} table-warning {% endif %}"
+          >
+            <td>{{ product.name }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>KSh {{ product.buying_price }}</td>
+            <td>KSh {{ product.selling_price }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">No products available.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Sales Log -->
+  <div class="card">
+    <div class="card-header">My Sales Log</div>
+    <div class="card-body table-responsive">
+      <table class="table" id="sales-log">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for sale in sales %}
+          <tr data-sale-id="{{ sale.id }}">
+            <td>{{ sale.product.name }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>KSh {{ sale.total_sale_value }}</td>
+            <td>{{ sale.date_sold|date:"d M Y, H:i" }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">No sales yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr class="table-light fw-bold">
+            <td colspan="2" class="text-end">Total Sales:</td>
+            <td colspan="2" class="text-success">
+              KSh {{ total_sales_amount }}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <!-- prettier-ignore -->
+  {% if messages %} {% for message in messages %} {% if "highlight-" in message.tags %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const saleId = "{{ message.tags|cut:'highlight-' }}";
+      const row = document.querySelector(`[data-sale-id='${saleId}']`);
+      if (row) {
+        row.classList.add("highlight-row");
+        setTimeout(() => row.classList.remove("highlight-row"), 3000);
+      }
+    });
+  </script>
+  {% endif %} {% endfor %} {% endif %}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const productPrices = {{ product_prices|safe }};
+    const productSelect = document.getElementById("id_product");
+    const priceInput = document.getElementById("id_selling_price");
+
+    if (productSelect && priceInput) {
+      productSelect.addEventListener("change", function () {
+        const selectedProductId = this.value;
+        if (selectedProductId && productPrices[selectedProductId]) {
+          priceInput.value = productPrices[selectedProductId];
+        }
+      });
+    }
+  });
+</script>
+
+{% endblock %}

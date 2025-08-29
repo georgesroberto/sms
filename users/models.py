@@ -43,4 +43,12 @@ class User(AbstractUser):
     def is_role(self, role_name):
         """Check if the user has a given role name (case-insensitive)."""
         return self.role and self.role.name.lower() == role_name.lower()
+    
+    @property
+    def is_admin(self):
+        return self.is_role("admin")
+
+    @property
+    def is_vendor(self):
+        return self.is_role("vendor")
 

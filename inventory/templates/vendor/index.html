@@ -1,0 +1,82 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Welcome, {{ request.user.username }}</h2>
+    <a
+      href="{% url 'inventory:vendor_sales' %}"
+      class="btn btn-lg btn-info text-white"
+    >
+      <i class="fas fa-cash-register me-2"></i> Record a Sale
+    </a>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Products</h5>
+          <p class="display-6">{{ products_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Today's Sales</h5>
+          <p class="display-6">{{ todays_sales_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Revenue Today</h5>
+          <p class="display-6 text-success">KSh {{ todays_revenue }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sales Trend -->
+  <div class="card mb-4">
+    <div class="card-header">Weekly Sales Trend</div>
+    <div class="card-body">
+      <canvas id="salesChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Quick Action -->
+  <div class="text-center">
+    <a href="{% url 'inventory:vendor_sales' %}" class="btn btn-primary">
+      <i class="fas fa-cash-register me-2"></i> Record a Sale
+    </a>
+  </div>
+</div>
+
+<script>
+  const ctx = document.getElementById('salesChart').getContext('2d');
+  const salesChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: {{ sales_trend_labels|safe }},
+      datasets: [{
+        label: 'Sales (KSh)',
+        data: {{ sales_trend_values|safe }},
+        borderWidth: 2,
+        fill: true,
+        tension: 0.3,
+        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)"
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+
+{% endblock %}
